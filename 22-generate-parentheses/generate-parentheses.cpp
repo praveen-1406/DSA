@@ -15,13 +15,11 @@ public:
             string x=s,y=s;
 
             x+="(";
-            int o=open-1;
-            func(v,o,close,x);
+            func(v,open-1,close,x);
 
             if(open<close){
                 y+=")";
-                int c=close-1;
-                func(v,open,c,y);
+                func(v,open,close-1,y);
             }
         }
     }
