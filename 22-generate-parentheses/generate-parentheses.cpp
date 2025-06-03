@@ -15,7 +15,7 @@ public:
             string x=s,y=s;
 
             x+="(";
-            ;int o=open-1;
+            int o=open-1;
             func(v,o,close,x);
 
             if(open<close){
