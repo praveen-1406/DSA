@@ -15,24 +15,36 @@ public:
     //     }
     // }
 
-    //by Recursion
-    void rec(int idx,vector<int> &temp,vector<vector<int>> &ans,vector<int>&num){
-        if(idx>=num.size()){
+    void powerSet(vector<int>&nums,vector<vector<int>>&ans){
+        int n=nums.size();
+        int comb=(1<<n);
+        for(int i=0;i<comb;i++){
+            vector<int>temp;
+            for(int j=0;j<n;j++){
+                if(i & (1<<j))   temp.push_back(nums[j]);
+            }
             ans.push_back(temp);
-            return;
         }
-        temp.push_back(num[idx]);
-        rec(idx+1,temp,ans,num);
-        temp.pop_back();
-        rec(idx+1,temp,ans,num);
     }
+
+    //by Recursion
+    // void rec(int idx,vector<int> &temp,vector<vector<int>> &ans,vector<int>&num){
+    //     if(idx>=num.size()){
+    //         ans.push_back(temp);
+    //         return;
+    //     }
+    //     temp.push_back(num[idx]);
+    //     rec(idx+1,temp,ans,num);
+    //     temp.pop_back();
+    //     rec(idx+1,temp,ans,num);
+    // }
 
 
     vector<vector<int>> subsets(vector<int>& nums) {
         vector<vector<int>>ans;
-        // powerSet(nums,ans);   
-        vector<int>temp={};
-        rec(0,temp,ans,nums) ;
+        powerSet(nums,ans);   
+        // vector<int>temp={};
+        // rec(0,temp,ans,nums) ;
         return ans;
     }
 };
