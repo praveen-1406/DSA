@@ -10,7 +10,7 @@ public:
                 zeros++;
                 q.push(r);
             }
-            if(!q.empty() && zeros>k){
+            if(zeros>k){
                 l=q.front()+1;
                 q.pop();
                 zeros--;
