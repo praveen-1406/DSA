@@ -9,10 +9,10 @@ public:
             else if(s[i]=='b')   b=i;
             else   c=i;
 
-            if(a!=-1 && b!=-1 && c!=-1){
+            // if(a!=-1 && b!=-1 && c!=-1){
                 int mini=min(min(a,b),c);
                 cnt+=mini+1;
-            }
+            // }
         }
         return cnt;
     }
