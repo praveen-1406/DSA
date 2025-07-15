@@ -6,13 +6,12 @@ public:
         sort(arr.begin(),arr.end(),[](vector<int>a,vector<int>b){
             return a[1]<b[1];
         });
-        
-        vector<vector<int>>selected;
-        selected.push_back(arr[0]);
+        int cnt=0;
+        int lastVal=arr[0][1];
         for(int i=1;i<n;i++){
-            if(selected[selected.size()-1][1]<=arr[i][0])   selected.push_back(arr[i]);
+            if(lastVal>arr[i][0])   cnt++;
+            else    lastVal=arr[i][1];
         }
-        int cnt=n-selected.size();
         return cnt;
     }
 };
