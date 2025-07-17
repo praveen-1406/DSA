@@ -17,15 +17,33 @@ public:
     //     int h2=traversal(node->right,height+1);
     //     return max(h1,h2);
     // }
-    int recursive(TreeNode* node){
-        if(node==nullptr)   return 0;
-        int h1=recursive(node->left);
-        int h2=recursive(node->right);
-        return 1+max(h1,h2);
+    // int recursive(TreeNode* node){
+    //     if(node==nullptr)   return 0;
+    //     int h1=recursive(node->left);
+    //     int h2=recursive(node->right);
+    //     return 1+max(h1,h2);
+    // }
+    int levelOrder(TreeNode* root){
+        if(root==nullptr)   return 0;
+        queue<TreeNode*>q;
+        int height=0;
+        q.push(root);
+        while(!q.empty()){
+            height++;
+            int size=q.size();
+            for(int i=0;i<size;i++){
+                TreeNode*node=q.front();
+                q.pop();
+                if(node->left!=nullptr)     q.push(node->left);
+                if(node->right!=nullptr)    q.push(node->right);
+            }
+        }
+        return height;
     }
 
     int maxDepth(TreeNode* root) {
         // return traversal(root,0);
-        return recursive(root);
+        // return recursive(root);
+        return levelOrder(root);
     }
 };
