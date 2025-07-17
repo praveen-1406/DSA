@@ -11,14 +11,21 @@
  */
 class Solution {
 public:
-    int traversal(TreeNode* node,int height){
-        if(node==nullptr)   return height;
-        int h1=traversal(node->left,height+1);
-        int h2=traversal(node->right,height+1);
-        return max(h1,h2);
+    // int traversal(TreeNode* node,int height){
+    //     if(node==nullptr)   return height;
+    //     int h1=traversal(node->left,height+1);
+    //     int h2=traversal(node->right,height+1);
+    //     return max(h1,h2);
+    // }
+    int recursive(TreeNode* node){
+        if(node==nullptr)   return 0;
+        int h1=recursive(node->left);
+        int h2=recursive(node->right);
+        return 1+max(h1,h2);
     }
 
     int maxDepth(TreeNode* root) {
-        return traversal(root,0);
+        // return traversal(root,0);
+        return recursive(root);
     }
 };
