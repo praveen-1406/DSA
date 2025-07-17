@@ -11,17 +11,19 @@
  */
 class Solution {
 public:
-    bool ans=true;
-    int recursive(TreeNode*node){
+    // bool ans=true;
+    int check(TreeNode*node){
         if(node==nullptr)   return 0;
-        int h1= recursive(node->left);
-        int h2= recursive(node->right);
-        if(abs(h1-h2)>1)    ans=false;   
+        int h1= check(node->left);
+        int h2= check(node->right);
+        if(h1==-1||h2==-1)  return -1;
+        if(abs(h1-h2)>1)    return -1;   
         return 1+max(h1,h2);
     }
 
     bool isBalanced(TreeNode* root) {
-        recursive(root);
-        return ans;
+        int height=check(root);
+        if(height==-1)  return false;
+        else    return true;
     }
 };
