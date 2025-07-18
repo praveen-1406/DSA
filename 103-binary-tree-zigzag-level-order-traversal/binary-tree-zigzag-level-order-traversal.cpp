@@ -19,17 +19,17 @@ public:
         bool lr=true;
         while(!q.empty()){
             int size=q.size();
-            vector<int>level;
+            vector<int>level(size);
             for(int i=0;i<size;i++){
                 TreeNode*temp=q.front();
                 q.pop();
-                level.push_back(temp->val);
+                int index=(lr)?i:size-1-i;
+                level[index]=temp->val;
                 
                 if(temp->left)  q.push(temp->left);
                 if(temp->right) q.push(temp->right);
                 
             }
-            if(lr==false)   reverse(level.begin(),level.end());
             ans.push_back(level);  
             lr=!lr;
         }
