@@ -37,11 +37,22 @@ public:
 
     void flatten(TreeNode* node) {
         // preorder(root);
+        // if(node==nullptr)   return;
+        // flatten(node->right);
+        // flatten(node->left);
+        // node->right=prev;
+        // node->left=nullptr;
+        // prev=node;
         if(node==nullptr)   return;
-        flatten(node->right);
-        flatten(node->left);
-        node->right=prev;
-        node->left=nullptr;
-        prev=node;
+        stack<TreeNode*>st;
+        st.push(node);
+        while(!st.empty()){
+            TreeNode*cur=st.top();
+            st.pop();
+            if(cur->right)  st.push(cur->right);
+            if(cur->left)  st.push(cur->left);
+            if(!st.empty())  cur->right=st.top();
+            cur->left=nullptr;
+        }
     }
 };
