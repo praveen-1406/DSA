@@ -12,28 +12,36 @@
 class Solution {
 public:
 
-    TreeNode* preorder(TreeNode* node){
-        if(!node) return nullptr;
-        TreeNode*left=node->left;
-        TreeNode*right=node->right;
-        TreeNode*terminal=node;
-        if(left){
-            TreeNode*lSubTree=preorder(left);
-            node->left=nullptr;
-            node->right=lSubTree;
-            while(lSubTree->right!=nullptr){
-                lSubTree=lSubTree->right;
-            }
-            terminal=lSubTree;
-        }
-        if(right){
-            TreeNode*rSubTree=preorder(right);
-            terminal->right=rSubTree;
-        }
-        return node;
-    }
+    // TreeNode* preorder(TreeNode* node){
+    //     if(!node) return nullptr;
+    //     TreeNode*left=node->left;
+    //     TreeNode*right=node->right;
+    //     TreeNode*terminal=node;
+    //     if(left){
+    //         TreeNode*lSubTree=preorder(left);
+    //         node->left=nullptr;
+    //         node->right=lSubTree;
+    //         while(lSubTree->right!=nullptr){
+    //             lSubTree=lSubTree->right;
+    //         }
+    //         terminal=lSubTree;
+    //     }
+    //     if(right){
+    //         TreeNode*rSubTree=preorder(right);
+    //         terminal->right=rSubTree;
+    //     }
+    //     return node;
+    // }
 
-    void flatten(TreeNode* root) {
-        preorder(root);
+    TreeNode* prev=nullptr;
+
+    void flatten(TreeNode* node) {
+        // preorder(root);
+        if(node==nullptr)   return;
+        flatten(node->right);
+        flatten(node->left);
+        node->right=prev;
+        node->left=nullptr;
+        prev=node;
     }
 };
