@@ -11,24 +11,24 @@
  */
 class Solution {
 public:
-    void createBST(TreeNode*node,vector<int>&preorder,int &idx,int start,int end){
+    void createBST(TreeNode*node,vector<int>&preorder,int &idx,int end){
         if(idx==preorder.size())    return ;
         TreeNode*cur=new TreeNode(preorder[idx]);
-        if(cur->val > start && cur->val < node->val) {
+        if(cur->val < node->val) {
             node->left=cur;
-            createBST(cur,preorder,++idx,start,node->val);
+            createBST(cur,preorder,++idx,node->val);
         }
         if(idx<preorder.size())    cur=new TreeNode(preorder[idx]);
         if(cur->val > node->val && cur->val < end){
             node->right=cur;
-            createBST(cur,preorder,++idx,node->val,end);
+            createBST(cur,preorder,++idx,end);
         }
         // else idx--;
     }
     TreeNode* bstFromPreorder(vector<int>& preorder) {
         TreeNode*root=new TreeNode(preorder[0]);
         int idx=1;
-        createBST(root,preorder,idx,0,1001);
+        createBST(root,preorder,idx,1001);
         return root;
     }
 };
