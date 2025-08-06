@@ -11,29 +11,45 @@
  */
 class Solution {
 public:
-    void inorder(TreeNode*node,vector<TreeNode*>&in){
-        if(node==nullptr)   return ;
-        inorder(node->left,in);
-        in.push_back(node);
-        inorder(node->right,in);
+    TreeNode*prev,*middle,*first,*last;
+    void inorder(TreeNode*node){
+        // if(node==nullptr)   return ;
+        // inorder(node->left,in);
+        // in.push_back(node);
+        // inorder(node->right,in);
+        if(node==nullptr)   return;
+        inorder(node->left);
+        if(prev!=nullptr && prev->val > node->val){
+            if(!first){
+                first=prev;
+                middle=node;
+            }
+            else    last=node;
+        }
+        prev=node;
+        inorder(node->right);
     }
     void recoverTree(TreeNode* root) {
-        vector<TreeNode*>in;
-        inorder(root,in);
-        int i=1,j=in.size()-2;
-        TreeNode*node1=nullptr,*node2=nullptr;
-        while(true){
-            if(!node1 && in[i-1]->val > in[i]->val)   node1=in[i-1];
-            if(!node2 && in[j+1]->val < in[j]->val)   node2=in[j+1];
-            if(node1 && node2)  break;
-            i++;
-            j--;
-        }
-        if(node1 && node2){
-            int tmp=node1->val;
-            node1->val=node2->val;
-            node2->val=tmp;
-        }
-        
+        // vector<TreeNode*>in;
+        // inorder(root,in);
+        // int i=1,j=in.size()-2;
+        // TreeNode*node1=nullptr,*node2=nullptr;
+        // while(true){
+        //     if(!node1 && in[i-1]->val > in[i]->val)   node1=in[i-1];
+        //     if(!node2 && in[j+1]->val < in[j]->val)   node2=in[j+1];
+        //     if(node1 && node2)  break;
+        //     i++;
+        //     j--;
+        // }
+        // if(node1 && node2){
+        //     int tmp=node1->val;
+        //     node1->val=node2->val;
+        //     node2->val=tmp;
+        // }
+        first=middle=last=nullptr;
+        prev=new TreeNode(INT_MIN);
+        inorder(root);
+        if(first && last)   swap(first->val,last->val);
+        else if(first && middle)    swap(first->val,middle->val);
     }
 };
