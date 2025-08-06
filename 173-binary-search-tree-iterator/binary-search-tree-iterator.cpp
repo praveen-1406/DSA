@@ -10,20 +10,21 @@
  * };
  */
 class BSTIterator {
-public:
     // vector<int>inorder;
     // TreeNode*root=nullptr;
     // int idx=-1;
     stack<TreeNode*>st;
+public:
     BSTIterator(TreeNode* root) {
         // this->root=root;
         // MorrisInorder(root);
         // idx++;
-        TreeNode*node=root;
-        while(node){
-            st.push(node);
-            node=node->left;
-        }
+        // TreeNode*node=root;
+        // while(node){
+        //     st.push(node);
+        //     node=node->left;
+        // }
+        pushAll(root);
     }
     
     // void MorrisInorder(TreeNode*root){
@@ -51,12 +52,13 @@ public:
     int next() {
         // return inorder[idx++];
         int ans=st.top()->val;
-        TreeNode*node=st.top()->right;
+        TreeNode*node=st.top();
         st.pop();
-        while(node){
-            st.push(node);
-            node=node->left;
-        }
+        // while(node){
+        //     st.push(node);
+        //     node=node->left;
+        // }
+        pushAll(node->right);
         return ans;
     }
     
@@ -64,6 +66,10 @@ public:
         // if(idx<inorder.size())  return true;
         // else    return false;
         return !st.empty();
+    }
+private:
+    void pushAll(TreeNode* node){
+        for(;node!=nullptr;st.push(node),node=node->left);
     }
 };
 
