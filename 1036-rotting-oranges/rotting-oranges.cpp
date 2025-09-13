@@ -7,11 +7,15 @@ public:
         int maxtime=0;
         queue<pair<pair<int,int>,int>>q;
         vector<vector<int>>vis(n,vector<int>(m,0));
+        int fresh=0;
         for(int i=0;i<n;i++){
             for(int j=0;j<m;j++){
                 if(grid[i][j]==2){
                     q.push({{i,j},0});
                     vis[i][j]=2;
+                }
+                if(grid[i][j]==1){
+                    fresh++;
                 }
                 
             }
@@ -48,17 +52,19 @@ public:
                 if(nrow>=0 && nrow<n && ncol>=0 && ncol<m && !vis[nrow][ncol] && grid[nrow][ncol]==1){
                     vis[nrow][ncol]=1;
                     q.push({{nrow,ncol},time+1});
+                    fresh--;
                 }
             }
         }
 
-        for(int i = 0; i < n; i++){
-            for(int j = 0; j < m; j++){
-                if(grid[i][j] == 1) {
-                    if(vis[i][j]==0)    return -1;
-                }
-            }
-        }
+        // for(int i = 0; i < n; i++){
+        //     for(int j = 0; j < m; j++){
+        //         if(grid[i][j] == 1) {
+        //             if(vis[i][j]==0)    return -1;
+        //         }
+        //     }
+        // }
+        if(fresh!=0)    return -1;
         
         return maxtime;
     }
