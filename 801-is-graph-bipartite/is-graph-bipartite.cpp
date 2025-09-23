@@ -16,12 +16,12 @@ class Solution {
     //     }
     //     return true;
     // }
-    bool dfs(int node,vector<vector<int>>& graph,vector<int>&vis){
-        int color=vis[node];
+    bool dfs(int node,int color,vector<vector<int>>& graph,vector<int>&vis){
+        vis[node]=color;
         for(auto it:graph[node]){
             if(vis[it]==0){
                 vis[it]=(color==1)?2:1;
-                if(dfs(it,graph,vis)==false)    return false;
+                if(dfs(it,vis[it],graph,vis)==false)    return false;
             }else if(vis[it]==color)    return false;
         }
         return true;
@@ -33,7 +33,7 @@ public:
         vector<int>vis(n,0);
         for(int i=0;i<n;i++){
             if(vis[i]==0){
-                if(dfs(i,graph,vis)==false)   return false;
+                if(dfs(i,1,graph,vis)==false)   return false;
             }
         }
 
