@@ -17,6 +17,9 @@ public:
             int node=x.second;
             for(auto it:adj[node]){
                 if(dis+it.second < dist[it.first]){
+                    if(dist[it.first]!=INT_MAX){
+                        st.erase({dist[it.first],it.first});
+                    }
                     dist[it.first]=dis+it.second;
                     st.insert({dist[it.first],it.first});
                 }
