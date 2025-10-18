@@ -17,7 +17,7 @@ public:
             long long t=q.top().first;
             int node=q.top().second;
             q.pop();
-            if(t>time[node])    continue;
+            // if(t>time[node])    continue;
             
             for(auto it:adj[node]){
                 long long newTime=it.second+t;
