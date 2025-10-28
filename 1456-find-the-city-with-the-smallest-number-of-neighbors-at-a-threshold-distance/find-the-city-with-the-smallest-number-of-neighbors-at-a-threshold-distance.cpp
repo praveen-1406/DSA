@@ -15,24 +15,41 @@ public:
         }
 
         // Floyd-Warshall Algorithm---
-        for(int k=0;k<n;k++){
-            for(int i=0;i<n;i++){
-                for(int j=0;j<n;j++){
-                    if(cost[i][k]!=INT_MAX && cost[k][j]!=INT_MAX){
-                        cost[i][j]=min(cost[i][j],cost[i][k]+cost[k][j]);
+        // for(int k=0;k<n;k++){
+        //     for(int i=0;i<n;i++){
+        //         for(int j=0;j<n;j++){
+        //             if(cost[i][k]!=INT_MAX && cost[k][j]!=INT_MAX){
+        //                 cost[i][j]=min(cost[i][j],cost[i][k]+cost[k][j]);
+        //             }
+        //         }
+        //     }
+        // }
+
+        // Dijkstra's Algorithm
+        vector<vector<int>>dist(n,vector<int>(n,INT_MAX));
+        for(int src=0;src<n;src++){
+            dist[src][src]=0;
+            priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>>pq;
+            pq.push({0,src});
+            while(!pq.empty()){
+                int dis=pq.top().first;
+                int node=pq.top().second;
+                pq.pop();
+                for(int i=0;i<n;i++){
+                    if(cost[node][i]!=INT_MAX && (dis+cost[node][i]<dist[src][i])){
+                        dist[src][i]=dis+cost[node][i];
+                        pq.push({dist[src][i],i});
                     }
                 }
             }
         }
-
-        // Dijkstra's Algorithm
 
         // Checking
         int city=0,mcities=100;
         for(int i=0;i<n;i++){
             int rcities=0;
             for(int j=0;j<n;j++){
-                if(cost[i][j]<=distanceThreshold)  rcities++; 
+                if(dist[i][j]<=distanceThreshold)  rcities++; 
             }
             if(rcities <= mcities){
                 mcities=rcities;
