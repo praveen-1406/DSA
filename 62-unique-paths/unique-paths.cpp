@@ -27,21 +27,18 @@ public:
 
         // Space Optimization
         vector<int>prevRow(n,0);
-        int preCol=0;
+        // int preCol=0;
         for(int row=0;row<m;row++){
             vector<int>temp(n,0);
             for(int col=0;col<n;col++){
                 if(row==0 && col==0){
                     temp[0]=1;
-                    preCol=1;
                     continue;
                 }
                 temp[col]+=prevRow[col];
-                temp[col]+=preCol;
-                preCol=temp[col];
+                if(col>0)    temp[col]+=temp[col-1];
             }
             prevRow=temp;
-            preCol=0;
         }
         return prevRow[n-1];
 
