@@ -14,16 +14,36 @@ public:
         // return f(0,0,m,n,dp);
 
         // tabulation
-        vector<vector<int>>dp(m,vector<int>(n,0));
-        dp[0][0]=1;
+        // vector<vector<int>>dp(m,vector<int>(n,0));
+        // dp[0][0]=1;
+        // for(int row=0;row<m;row++){
+        //     for(int col=0;col<n;col++){
+        //         if(row==0 && col==0)    continue;
+        //         if(row-1 >=0)    dp[row][col]+=dp[row-1][col];
+        //         if(col-1 >=0)    dp[row][col]+=dp[row][col-1];
+        //     }
+        // }
+        // return dp[m-1][n-1];
+
+        // Space Optimization
+        vector<int>prevRow(n,0);
+        int preCol=0;
         for(int row=0;row<m;row++){
+            vector<int>temp(n,0);
             for(int col=0;col<n;col++){
-                if(row==0 && col==0)    continue;
-                if(row-1 >=0)    dp[row][col]+=dp[row-1][col];
-                if(col-1 >=0)    dp[row][col]+=dp[row][col-1];
+                if(row==0 && col==0){
+                    temp[0]=1;
+                    preCol=1;
+                    continue;
+                }
+                temp[col]+=prevRow[col];
+                temp[col]+=preCol;
+                preCol=temp[col];
             }
+            prevRow=temp;
+            preCol=0;
         }
-        return dp[m-1][n-1];
+        return prevRow[n-1];
 
     }
 };
