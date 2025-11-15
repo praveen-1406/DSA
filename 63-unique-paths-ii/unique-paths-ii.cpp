@@ -32,20 +32,40 @@ public:
         // return f(m-1,n-1,grid,dp);
 
         // Tabulation
-        vector<vector<int>>dp(m,vector<int>(n,0));
-        dp[0][0]=1;
+        // vector<vector<int>>dp(m,vector<int>(n,0));
+        // dp[0][0]=1;
+        // for(int row=0;row<m;row++){
+        //     for(int col=0;col<n;col++){
+        //         if(grid[row][col]==1)   {
+        //             dp[row][col]=0;
+        //             continue;
+        //         }
+        //         if(row==0 && col==0)    continue;
+        //         if(col>0 && grid[row][col-1]!=1)   dp[row][col]+=dp[row][col-1];
+        //         if(row>0 && grid[row-1][col]!=1)   dp[row][col]+=dp[row-1][col];
+        //     }
+        // }
+        // return dp[m-1][n-1];
+
+        // Space Optimization
+        vector<int>preRow(n,0);
         for(int row=0;row<m;row++){
+            vector<int>temp(n,0);
             for(int col=0;col<n;col++){
                 if(grid[row][col]==1)   {
-                    dp[row][col]=0;
+                    temp[col]=0;
                     continue;
                 }
-                if(row==0 && col==0)    continue;
-                if(col>0 && grid[row][col-1]!=1)   dp[row][col]+=dp[row][col-1];
-                if(row>0 && grid[row-1][col]!=1)   dp[row][col]+=dp[row-1][col];
+                if(row==0 && col==0){
+                    temp[col]=1;
+                    continue;
+                }
+                if(col>0 && grid[row][col-1]!=1)   temp[col]+=temp[col-1];
+                if(row>0 && grid[row-1][col]!=1)   temp[col]+=preRow[col];
             }
+            preRow=temp;
         }
-        return dp[m-1][n-1];
+        return preRow[n-1];
 
     }
 };
