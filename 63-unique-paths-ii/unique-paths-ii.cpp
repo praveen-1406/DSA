@@ -60,8 +60,8 @@ public:
                     temp[col]=1;
                     continue;
                 }
-                if(col>0 && grid[row][col-1]!=1)   temp[col]+=temp[col-1];
-                if(row>0 && grid[row-1][col]!=1)   temp[col]+=preRow[col];
+                if(col>0)   temp[col]+=temp[col-1];
+                if(row>0)   temp[col]+=preRow[col];
             }
             preRow=temp;
         }
