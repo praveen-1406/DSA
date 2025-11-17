@@ -42,22 +42,44 @@ public:
         // return ans;
 
         // Tabulation
-        vector<vector<int>>dp(n,vector<int>(n,0));
+        // vector<vector<int>>dp(n,vector<int>(n,0));
+        // for(int i=0;i<n;i++){           // Base Case
+        //     dp[n-1][i]=matrix[n-1][i];
+        // }
+        // for(int i=n-2;i>=0;i--){
+        //     for(int j=n-1;j>=0;j--){
+        //         int down=INT_MAX,ldia=INT_MAX,rdia=INT_MAX;
+        //         down=dp[i+1][j];
+        //         if(j>0) ldia=dp[i+1][j-1];
+        //         if(j+1<n)   rdia=dp[i+1][j+1];
+        //         dp[i][j]=matrix[i][j]+min(down,min(ldia,rdia));
+        //     }
+        // }
+        // int ans=INT_MAX;
+        // for(int i=0;i<n;i++){
+        //     ans=min(ans,dp[0][i]);
+        // }
+        // return ans;
+
+        // Tabulation
+        vector<int>dp(n,0);
         for(int i=0;i<n;i++){           // Base Case
-            dp[n-1][i]=matrix[n-1][i];
+            dp[i]=matrix[n-1][i];
         }
         for(int i=n-2;i>=0;i--){
+            vector<int>temp(n);
             for(int j=n-1;j>=0;j--){
                 int down=INT_MAX,ldia=INT_MAX,rdia=INT_MAX;
-                down=dp[i+1][j];
-                if(j>0) ldia=dp[i+1][j-1];
-                if(j+1<n)   rdia=dp[i+1][j+1];
-                dp[i][j]=matrix[i][j]+min(down,min(ldia,rdia));
+                down=dp[j];
+                if(j>0) ldia=dp[j-1];
+                if(j+1<n)   rdia=dp[j+1];
+                temp[j]=matrix[i][j]+min(down,min(ldia,rdia));
             }
+            dp=temp;
         }
         int ans=INT_MAX;
         for(int i=0;i<n;i++){
-            ans=min(ans,dp[0][i]);
+            ans=min(ans,dp[i]);
         }
         return ans;
 
