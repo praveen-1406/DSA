@@ -61,7 +61,7 @@ public:
         // }
         // return ans;
 
-        // Tabulation
+        // Space Optimization
         vector<int>dp(n,0);
         for(int i=0;i<n;i++){           // Base Case
             dp[i]=matrix[n-1][i];
