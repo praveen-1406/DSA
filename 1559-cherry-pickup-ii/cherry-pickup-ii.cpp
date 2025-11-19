@@ -78,7 +78,7 @@ public:
         vector<vector<int>>front(m,vector<int>(m,-1));
         vector<vector<int>>cur(m,vector<int>(m,-1));
 
-        for(int j1=0;j1<m;j1++){
+        for(int j1=0;j1<m;j1++){ //Base Case
             for(int j2=0;j2<m;j2++){
                 if(j1==j2)  front[j1][j2]=grid[n-1][j1];
                 else        front[j1][j2]=grid[n-1][j1]+grid[n-1][j2];
