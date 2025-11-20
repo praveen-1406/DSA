@@ -1,23 +1,42 @@
 class Solution {
-    // Recursion
-    bool f(int ind,int a,int b,vector<int>&nums,vector<vector<int>>&dp){
-        if(ind<0 && a==b)   return true;
-        if(ind<0 && a!=b)   return false;
-        if(dp[ind][a]!=-1)   return dp[ind][a];
-        bool picka=f(ind-1,a+nums[ind],b,nums,dp);
-        bool pickb=f(ind-1,a,b+nums[ind],nums,dp);
-        return dp[ind][a]=(picka || pickb);
+
+    // // Recursion
+    // bool f(int ind,int k,vector<int>&nums){
+    //     if(k==0)    return true;
+    //     if(ind==0)    return (nums[0]==k);
+    //     bool notPick=f(ind-1,k,nums);
+    //     bool pick=false;
+    //     if(k>=nums[ind])    pick=f(ind-1,k-nums[ind],nums);
+    //     return (pick || notPick);
+    // }
+    
+    // Memoization
+    bool f(int ind,int k,vector<int>&nums,vector<vector<int>>&dp){
+        if(k==0)    return true;
+        if(ind==0)    return (nums[0]==k);
+        if(dp[ind][k]!=-1)  return dp[ind][k];
+        bool notPick=f(ind-1,k,nums,dp);
+        bool pick=false;
+        if(k>=nums[ind])    pick=f(ind-1,k-nums[ind],nums,dp);
+        return dp[ind][k]=(pick || notPick);
     }
 
-    // Memoization
+
 public:
     bool canPartition(vector<int>& nums) {
         int n=nums.size();
+        int sum=0;
+        for(int i=0;i<n;i++)    sum+=nums[i];
+        if(sum%2==1)    return false;
+        int k=sum/2;
+
         // Recursion
-        // return f(n-1,0,0,nums);
+        // return f(n-1,k,nums);
 
         // Memoization
-        vector<vector<int>>dp(n,vector<int>(n*100,-1));
-        return f(n-1,0,0,nums,dp);
+        vector<vector<int>>dp(n,vector<int>(k+1,-1));
+        return f(n-1,k,nums,dp);
+
+        
     }
 };
