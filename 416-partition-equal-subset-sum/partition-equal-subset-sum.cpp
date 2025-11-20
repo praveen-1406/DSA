@@ -54,7 +54,7 @@ public:
         // Space Optimization
         vector<bool>pre(k+1,false),cur(k+1,false);
         pre[0]=true;
-        if(nums[0]==k)    pre[nums[0]]=true;
+        // if(nums[0]==k)    pre[nums[0]]=true;
         for(int ind=1;ind<n;ind++){
             cur[0]=true;
             for(int tar=1;tar<=k;tar++){
