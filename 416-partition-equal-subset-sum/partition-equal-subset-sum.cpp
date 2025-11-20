@@ -38,18 +38,34 @@ public:
         // return f(n-1,k,nums,dp);
 
         // Tabulation
-        vector<vector<bool>>dp(n,vector<bool>(k+1,false));
-        for(int i=0;i<n;i++)    dp[i][0]=true;
-        if(nums[0]==k)    dp[0][nums[0]]=true;
+        // vector<vector<bool>>dp(n,vector<bool>(k+1,false));
+        // for(int i=0;i<n;i++)    dp[i][0]=true;
+        // if(nums[0]==k)    dp[0][nums[0]]=true;
+        // for(int ind=1;ind<n;ind++){
+        //     for(int tar=1;tar<=k;tar++){
+        //         bool notPick=dp[ind-1][tar];
+        //         bool pick=false;
+        //         if(tar>=nums[ind])  pick=dp[ind-1][tar-nums[ind]];
+        //         dp[ind][tar]=(pick || notPick);
+        //     }
+        // }
+        // return dp[n-1][k];
+    
+        // Space Optimization
+        vector<bool>pre(k+1,false),cur(k+1,false);
+        pre[0]=true;
+        if(nums[0]==k)    pre[nums[0]]=true;
         for(int ind=1;ind<n;ind++){
+            cur[0]=true;
             for(int tar=1;tar<=k;tar++){
-                bool notPick=dp[ind-1][tar];
+                bool notPick=pre[tar];
                 bool pick=false;
-                if(tar>=nums[ind])  pick=dp[ind-1][tar-nums[ind]];
-                dp[ind][tar]=(pick || notPick);
+                if(tar>=nums[ind])  pick=pre[tar-nums[ind]];
+                cur[tar]=(pick || notPick);
             }
+            pre=cur;
         }
-        return dp[n-1][k];
+        return pre[k];
 
         
     }
