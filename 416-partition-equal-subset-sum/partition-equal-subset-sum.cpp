@@ -11,15 +11,15 @@ class Solution {
     // }
     
     // Memoization
-    bool f(int ind,int k,vector<int>&nums,vector<vector<int>>&dp){
-        if(k==0)    return true;
-        if(ind==0)    return (nums[0]==k);
-        if(dp[ind][k]!=-1)  return dp[ind][k];
-        bool notPick=f(ind-1,k,nums,dp);
-        bool pick=false;
-        if(k>=nums[ind])    pick=f(ind-1,k-nums[ind],nums,dp);
-        return dp[ind][k]=(pick || notPick);
-    }
+    // bool f(int ind,int k,vector<int>&nums,vector<vector<int>>&dp){
+    //     if(k==0)    return true;
+    //     if(ind==0)    return (nums[0]==k);
+    //     if(dp[ind][k]!=-1)  return dp[ind][k];
+    //     bool notPick=f(ind-1,k,nums,dp);
+    //     bool pick=false;
+    //     if(k>=nums[ind])    pick=f(ind-1,k-nums[ind],nums,dp);
+    //     return dp[ind][k]=(pick || notPick);
+    // }
 
 
 public:
@@ -34,8 +34,22 @@ public:
         // return f(n-1,k,nums);
 
         // Memoization
-        vector<vector<int>>dp(n,vector<int>(k+1,-1));
-        return f(n-1,k,nums,dp);
+        // vector<vector<int>>dp(n,vector<int>(k+1,-1));
+        // return f(n-1,k,nums,dp);
+
+        // Tabulation
+        vector<vector<bool>>dp(n,vector<bool>(k+1,false));
+        for(int i=0;i<n;i++)    dp[i][0]=true;
+        if(nums[0]<=k)    dp[0][nums[0]]=true;
+        for(int ind=1;ind<n;ind++){
+            for(int tar=1;tar<=k;tar++){
+                bool notPick=dp[ind-1][tar];
+                bool pick=false;
+                if(tar>=nums[ind])  pick=dp[ind-1][tar-nums[ind]];
+                dp[ind][tar]=(pick || notPick);
+            }
+        }
+        return dp[n-1][k];
 
         
     }
