@@ -44,20 +44,22 @@ public:
         // vector<vector<int>>dp(n,vector<int>(k+1,-1));
         // return f(n-1,k,nums,dp);
 
-        vector<vector<int>>dp(n,vector<int>(k+1,0));
-        dp[0][0]=1;
-        if(nums[0]==0)  dp[0][0]=2;
-        if(nums[0]!=0 && k>=nums[0])  dp[0][nums[0]]=1;
+        // vector<vector<int>>dp(n,vector<int>(k+1,0));
+        vector<int>pre(k+1,0),cur(k+1,0);
+        pre[0]=1;
+        if(nums[0]==0)  pre[0]=2;
+        if(nums[0]!=0 && k>=nums[0])  pre[nums[0]]=1;
 
         for(int ind=1;ind<n;ind++){
             for(int tar=0;tar<=k;tar++){
                 int pick=0;
-                if(tar>=nums[ind])    pick=dp[ind-1][tar-nums[ind]];
-                int notPick=dp[ind-1][tar];
-                dp[ind][tar]=(pick+notPick);
+                if(tar>=nums[ind])    pick=pre[tar-nums[ind]];
+                int notPick=pre[tar];
+                cur[tar]=(pick+notPick);
             }
+            pre=cur;
         }
-        return dp[n-1][k];
+        return pre[k];
     }
 };
 
