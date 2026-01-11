@@ -14,19 +14,18 @@ class Solution {
 
     // }
 
-    int f(int ind,int k,vector<int>&nums){
+    int f(int ind,int k,vector<int>&nums,vector<vector<int>>&dp){
         if(ind==0){
-            if(k==0){
-                if(nums[0]==0)  return 2;
-                else return 1;
-            }
-            else if(k==nums[0]) return 1;
+            if(k==0 && nums[0]==0) return 2;
+            if(k==0) return 1;
+            return (k==nums[0]);
             return 0;
         }
+        if(dp[ind][k]!=-1)  return dp[ind][k];
         int pick=0;
-        if(k>=nums[ind])    pick=f(ind-1,k-nums[ind],nums);
-        int notPick=f(ind-1,k,nums);
-        return (pick+notPick);
+        if(k>=nums[ind])    pick=f(ind-1,k-nums[ind],nums,dp);
+        int notPick=f(ind-1,k,nums,dp);
+        return dp[ind][k]=(pick+notPick);
     }
 
 
@@ -38,11 +37,12 @@ public:
         // Count the subsets with sum k
         int sum=0;
         for(int i=0;i<n;i++)    sum+=nums[i];
-        int k=0;
-        if((sum-target)%2==0) k=(sum-target)/2;
-        else return 0;
+        
+        if((target>sum)||(sum-target)%2)    return 0;
+        int k=(sum-target)/2;
 
-        return f(n-1,k,nums);
+        vector<vector<int>>dp(n,vector<int>(k+1,-1));
+        return f(n-1,k,nums,dp);
     }
 };
 
