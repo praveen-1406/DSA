@@ -10,17 +10,17 @@ class Solution {
     //     return dp[amt]=mincnt;
     // }
 
-    int f(int ind,int tar,vector<int>&coins,vector<vector<int>>&dp){
-        if(ind==0){
-            if(tar%coins[0]==0)     return tar/coins[0];
-            else return 1e9;
-        }
-        if(dp[ind][tar]!=-1)    return dp[ind][tar];
-        int notPick=0+f(ind-1,tar,coins,dp);
-        int pick=INT_MAX;
-        if(tar>=coins[ind])     pick=1+f(ind,tar-coins[ind],coins,dp);
-        return dp[ind][tar]=min(notPick,pick);
-    }
+    // int f(int ind,int tar,vector<int>&coins,vector<vector<int>>&dp){
+    //     if(ind==0){
+    //         if(tar%coins[0]==0)     return tar/coins[0];
+    //         else return 1e9;
+    //     }
+    //     if(dp[ind][tar]!=-1)    return dp[ind][tar];
+    //     int notPick=0+f(ind-1,tar,coins,dp);
+    //     int pick=INT_MAX;
+    //     if(tar>=coins[ind])     pick=1+f(ind,tar-coins[ind],coins,dp);
+    //     return dp[ind][tar]=min(notPick,pick);
+    // }
 
 public:
     int coinChange(vector<int>& coins, int amount) {
@@ -59,10 +59,27 @@ public:
         // return dp[amount];
 
         int n=coins.size();
-        vector<vector<int>>dp(n,vector<int>(amount+1,-1));
-        int ans=f(n-1,amount,coins,dp);
-        if(ans>=1e9)    return -1;
-        return ans;
+        // vector<vector<int>>dp(n,vector<int>(amount+1,-1));
+        // int ans=f(n-1,amount,coins,dp);
+        // if(ans>=1e9)    return -1;
+        // return ans;
+
+        vector<vector<int>>dp(n,vector<int>(amount+1,0));
+        for(int t=0;t<=amount;t++) {
+            if(t%coins[0]==0)   dp[0][t]=t/coins[0];
+            else dp[0][t]=1e9;
+        }
+        for(int ind=1;ind<n;ind++){
+            for(int tar=0;tar<=amount;tar++){
+                int notPick=0+dp[ind-1][tar];
+                int pick=INT_MAX;
+                if(tar>=coins[ind])     pick=1+dp[ind][tar-coins[ind]];
+                dp[ind][tar]=min(notPick,pick);
+            }
+        }
+
+        if(dp[n-1][amount]>=1e9)    return -1;
+        return dp[n-1][amount];
 
     }
 };
