@@ -33,6 +33,7 @@ public:
         // return dp[0][amount];
 
         vector<int>dp(amount+1,0);
+        
         for(int amt=1;amt<=amount;amt++){
             int mincnt=20000;
             for(int i=0;i<coins.size();i++){
