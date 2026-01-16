@@ -14,10 +14,24 @@ class Solution {
 public:
     int change(int amount, vector<int>& coins) {
         int n=coins.size();
-        vector<vector<int>>dp(n,vector<int>(amount+1,-1));
-        return f(n-1,amount,coins,dp);
+        // vector<vector<int>>dp(n,vector<int>(amount+1,-1));
+        // return f(n-1,amount,coins,dp);
 
+        // vector<vector<unsigned long long>>dp(n,vector<unsigned long long>(amount+1,0));
+        vector<unsigned long long>pre(amount+1,0),cur(amount+1,0);
 
+        for(int i=0;i<=amount;i++)    if(i%coins[0]==0)     pre[i]=1;
+        for(int ind=1;ind<n;ind++){
+            for(int amt=0;amt<=amount;amt++){
+                unsigned long long pick=0;
+                if(amt>=coins[ind])     pick=cur[amt-coins[ind]];
+                unsigned long long notPick=pre[amt];
+
+                cur[amt]=pick+notPick;
+            }   
+            pre=cur;
+        }
+        return (int)pre[amount];
 
     }
 };
