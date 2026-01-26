@@ -1,7 +1,7 @@
 class Solution {
     int f(int i,int j,string &s,string &t,int len,vector<vector<int>>&dp){
         if(i==0 || j==0){
-            if(len==t.size())   return 1;
+            if(j==0)   return 1;
             return 0;
         }
         if(dp[i][j]!=-1)    return dp[i][j];
@@ -17,5 +17,18 @@ public:
         int m=t.size();
         vector<vector<int>>dp(n+1,vector<int>(m+1,-1));
         return f(n,m,s,t,0,dp);
+
+        // vector<vector<int>>dp(n+1,vector<int>(m+1,0));
+        // for(int i=0;<=n;i++)    dp[i][0]=0;
+        // for(int j=0;j<=m;j++)   dp[0][j]=0;
+        // for(int i=0)
+
     }
 };
+
+
+
+
+
+
+
