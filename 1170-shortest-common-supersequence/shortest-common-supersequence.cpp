@@ -14,50 +14,75 @@ public:
             }
         }
         int len=dp[n][m];
-        string lcs(len,'$');
-        int i=n,j=m,ind=len-1;
+        // string lcs(len,'$');
+        // int i=n,j=m,ind=len-1;
+        // while(i>0 && j>0){
+        //     if(s1[i-1]==s2[j-1]){
+        //         lcs[ind--]=s1[i-1];
+        //         i--;
+        //         j--;
+        //     }else if(dp[i-1][j]>=dp[i][j]){
+        //         i--;
+        //     }else{
+        //         j--;
+        //     }
+        // } 
+
+        // int l=n+m-len;
+        // string ans(l,'$');
+        // int a=0,b=0,c=0,idx=0;
+        // while(idx<len){
+        //     if(a<n && s1[a]!=lcs[idx]){
+        //         ans[c]=s1[a];
+        //         a++;
+        //         c++;
+        //     }else if(b<m && s2[b]!=lcs[idx]){
+        //         ans[c]=s2[b];
+        //         b++;
+        //         c++;
+        //     }else{
+        //         ans[c]=lcs[idx];
+        //         idx++;
+        //         c++;
+        //         a++;
+        //         b++;
+        //     }
+        // }
+        // while(a<n){
+        //     ans[c]=s1[a];
+        //     a++;
+        //     c++;
+        // }
+        // while(b<m){
+        //     ans[c]=s2[b];
+        //     b++;
+        //     c++;
+        // }
+        // return ans;
+        string ans="";
+        int i=n,j=m;
         while(i>0 && j>0){
             if(s1[i-1]==s2[j-1]){
-                lcs[ind--]=s1[i-1];
+                ans+=s1[i-1];
                 i--;
                 j--;
-            }else if(dp[i-1][j]>=dp[i][j]){
+            }else if(dp[i-1][j]>dp[i][j-1]){
+                ans+=s1[i-1];
                 i--;
             }else{
+                ans+=s2[j-1];
                 j--;
             }
-        } 
-
-        int l=n+m-len;
-        string ans(l,'$');
-        int a=0,b=0,c=0,idx=0;
-        while(idx<len){
-            if(a<n && s1[a]!=lcs[idx]){
-                ans[c]=s1[a];
-                a++;
-                c++;
-            }else if(b<m && s2[b]!=lcs[idx]){
-                ans[c]=s2[b];
-                b++;
-                c++;
-            }else{
-                ans[c]=lcs[idx];
-                idx++;
-                c++;
-                a++;
-                b++;
-            }
         }
-        while(a<n){
-            ans[c]=s1[a];
-            a++;
-            c++;
+        while(i>0){
+            ans+=s1[i-1];
+            i--;
         }
-        while(b<m){
-            ans[c]=s2[b];
-            b++;
-            c++;
+        while(j>0){
+            ans+=s2[j-1];
+            j--;
         }
+        reverse(ans.begin(),ans.end());
         return ans;
 
     }
