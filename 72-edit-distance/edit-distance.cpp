@@ -37,7 +37,7 @@ public:
         // return dp[n][m];
 
         vector<int>pre(m+1,0),cur(m+1,0);
-        pre[0]=0;
+        // pre[0]=0;
         for(int j=0;j<=m;j++)   pre[j]=j;
         for(int i=1;i<=n;i++){
             cur[0]=i;
