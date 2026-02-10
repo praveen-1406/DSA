@@ -14,17 +14,32 @@ public:
         // return f(0,1,prices,dp);
 
         // vector<vector<int>>dp(n+1,vector<int>(2,0));
-        vector<int>ahead(2,0),cur(2,0);
-        ahead[0]=ahead[1]=0;
+        // vector<int>ahead(2,0),cur(2,0);
+        // ahead[0]=ahead[1]=0;
+        // for(int ind=n-1;ind>=0;ind--){
+        //     for(int buy=0;buy<2;buy++){
+        //         int profit;
+        //         if(buy)     profit=max(-prices[ind]+ahead[0],0+ahead[1]);
+        //         else    profit=max(prices[ind]+ahead[1],0+ahead[0]);
+        //         cur[buy]=profit;
+        //     }
+        //     ahead=cur;
+        // }
+        // return ahead[1];
+
+        
+        int aheadNotBuy,aheadBuy,curNotBuy,curBuy;
+        aheadNotBuy=aheadBuy=0;
         for(int ind=n-1;ind>=0;ind--){
-            for(int buy=0;buy<2;buy++){
-                int profit;
-                if(buy)     profit=max(-prices[ind]+ahead[0],0+ahead[1]);
-                else    profit=max(prices[ind]+ahead[1],0+ahead[0]);
-                cur[buy]=profit;
-            }
-            ahead=cur;
+            curBuy=max(-prices[ind]+aheadNotBuy,0+aheadBuy);
+            curNotBuy=max(prices[ind]+aheadBuy,0+aheadNotBuy);
+                
+            aheadBuy=curBuy;
+            aheadNotBuy=curNotBuy;
+            
         }
-        return ahead[1];
+        return aheadBuy;
+
+
     }
 };
