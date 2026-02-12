@@ -13,15 +13,23 @@ public:
         // vector<vector<int>>dp(n,vector<int>(2,-1));
         // return f(0,1,fee,prices,dp);
         
-        vector<vector<int>>dp(n+1,vector<int>(2,0));
+        // vector<vector<int>>dp(n+1,vector<int>(2,0));
+        // for(int ind=n-1;ind>=0;ind--){
+        //     for(int buy=0;buy<2;buy++){
+        //         int profit;
+        //         if(buy)     profit=max(-prices[ind]+dp[ind+1][0],0+dp[ind+1][1]);
+        //         else    profit=max(prices[ind]+dp[ind+1][1]-fee,0+dp[ind+1][0]);
+        //         dp[ind][buy]=profit;
+        //     }
+        // }
+        // return dp[0][1];
+
+        vector<int>cur(2,0),front(2,0);
         for(int ind=n-1;ind>=0;ind--){
-            for(int buy=0;buy<2;buy++){
-                int profit;
-                if(buy)     profit=max(-prices[ind]+dp[ind+1][0],0+dp[ind+1][1]);
-                else    profit=max(prices[ind]+dp[ind+1][1]-fee,0+dp[ind+1][0]);
-                dp[ind][buy]=profit;
-            }
+                cur[1]=max(-prices[ind]+front[0],0+front[1]);
+                cur[0]=max(prices[ind]+front[1]-fee,0+front[0]);
+                front=cur;
         }
-        return dp[0][1];
+        return front[1];
     }
 };
