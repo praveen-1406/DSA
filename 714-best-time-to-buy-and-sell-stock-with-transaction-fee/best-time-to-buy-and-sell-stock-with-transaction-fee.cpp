@@ -26,8 +26,8 @@ public:
 
         vector<int>cur(2,0),front(2,0);
         for(int ind=n-1;ind>=0;ind--){
-                cur[1]=max(-prices[ind]+front[0],0+front[1]);
-                cur[0]=max(prices[ind]+front[1]-fee,0+front[0]);
+                cur[1]=max(-prices[ind]+front[0]-fee,0+front[1]);
+                cur[0]=max(prices[ind]+front[1],0+front[0]);
                 front=cur;
         }
         return front[1];
