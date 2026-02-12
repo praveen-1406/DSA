@@ -69,20 +69,36 @@ public:
         // vector<vector<int>>dp(n,vector<int>(2*k,-1));
         // return f(0,0,k,prices,dp);
 
-        vector<vector<int>>dp(n+1,vector<int>(2*k+1,0));
+        // vector<vector<int>>dp(n+1,vector<int>(2*k+1,0));
+        // for(int ind=n-1;ind>=0;ind--){
+        //     for(int tran=2*k-1;tran>=0;tran--){
+        //         int profit;
+        //         if(tran%2==0){  //buy
+        //             profit=max(-prices[ind]+dp[ind+1][tran+1],0+dp[ind+1][tran]);
+        //         }
+        //         else{   //sell
+        //             profit=max(prices[ind]+dp[ind+1][tran+1],0+dp[ind+1][tran]);
+        //         }
+        //         dp[ind][tran]=profit;
+        //     }
+        // }
+        // return dp[0][0];
+
+        vector<int>after(2*k+1,0),cur(2*k+1,0);
         for(int ind=n-1;ind>=0;ind--){
             for(int tran=2*k-1;tran>=0;tran--){
                 int profit;
                 if(tran%2==0){  //buy
-                    profit=max(-prices[ind]+dp[ind+1][tran+1],0+dp[ind+1][tran]);
+                    profit=max(-prices[ind]+after[tran+1],0+after[tran]);
                 }
                 else{   //sell
-                    profit=max(prices[ind]+dp[ind+1][tran+1],0+dp[ind+1][tran]);
+                    profit=max(prices[ind]+after[tran+1],0+after[tran]);
                 }
-                dp[ind][tran]=profit;
+                cur[tran]=profit;
             }
+            after=cur;
         }
-        return dp[0][0];
+        return after[0];
 
     }
 };
