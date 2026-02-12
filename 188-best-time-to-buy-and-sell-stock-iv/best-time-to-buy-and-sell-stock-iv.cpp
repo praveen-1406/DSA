@@ -18,21 +18,39 @@ public:
         // vector<vector<vector<int>>>dp(n,vector<vector<int>>(2,vector<int>(k+1,-1)));
         // return f(0,1,k,prices,dp);
 
-        vector<vector<vector<int>>>dp(n+1,vector<vector<int>>(2,vector<int>(k+1,0)));
+        // vector<vector<vector<int>>>dp(n+1,vector<vector<int>>(2,vector<int>(k+1,0)));
+        // for(int ind=n-1;ind>=0;ind--){
+        //     for(int buy=0;buy<2;buy++){
+        //         for(int cap=1;cap<=k;cap++){
+        //             int profit;
+        //             if(buy){
+        //                 profit=max(-prices[ind]+dp[ind+1][0][cap],0+dp[ind+1][1][cap]);
+        //             }
+        //             else{
+        //                 profit=max(prices[ind]+dp[ind+1][1][cap-1],0+dp[ind+1][0][cap]);
+        //             }
+        //             dp[ind][buy][cap]=profit;
+        //         }
+        //     }
+        // }
+        // return dp[0][1][k];
+
+        vector<vector<int>>after(2,vector<int>(k+1,0)),cur(2,vector<int>(k+1,0));
         for(int ind=n-1;ind>=0;ind--){
             for(int buy=0;buy<2;buy++){
                 for(int cap=1;cap<=k;cap++){
                     int profit;
                     if(buy){
-                        profit=max(-prices[ind]+dp[ind+1][0][cap],0+dp[ind+1][1][cap]);
+                        profit=max(-prices[ind]+after[0][cap],0+after[1][cap]);
                     }
                     else{
-                        profit=max(prices[ind]+dp[ind+1][1][cap-1],0+dp[ind+1][0][cap]);
+                        profit=max(prices[ind]+after[1][cap-1],0+after[0][cap]);
                     }
-                    dp[ind][buy][cap]=profit;
+                    cur[buy][cap]=profit;
                 }
+                after=cur;
             }
         }
-        return dp[0][1][k];
+        return after[1][k];
     }
 };
