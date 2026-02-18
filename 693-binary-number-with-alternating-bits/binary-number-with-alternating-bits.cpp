@@ -21,14 +21,16 @@ public:
         // }
         // return true;
 
-        int curbit=n%2;
-        n/=2;
-        while(n){
-            if(curbit==n%2)     return false;
-            curbit=n%2;
-            n/=2;
+        // int curbit=n%2;
+        // n/=2;
+        // while(n){
+        //     if(curbit==n%2)     return false;
+        //     curbit=n%2;
+        //     n/=2;
 
-        }
-        return true;
+        // }
+        // return true;
+        long long a=(long long)n^(n>>1);
+        return !((a)&(a+1));
     }
 };
