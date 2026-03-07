@@ -3,25 +3,25 @@ public:
     int minFlips(string s) {
         int n=s.size();
         // s=s+s;
-        string s1="",s2="";
-        for(int i=0;i<2*n;i++){
-            if(i%2==0){
-                s1+='0';
-                s2+='1';
-            }else{
-                s1+='1';
-                s2+='0';
-            }
-        }
+        // string s1="",s2="";
+        // for(int i=0;i<2*n;i++){
+        //     if(i%2==0){
+        //         s1+='0';
+        //         s2+='1';
+        //     }else{
+        //         s1+='1';
+        //         s2+='0';
+        //     }
+        // }
         int result=INT_MAX;
         int flip1=0,flip2=0;
         int i=0,j=0;
         while(j<2*n){
-            if(s[j%n]!=s1[j]) flip1++;
-            if(s[j%n]!=s2[j]) flip2++;
+            if((s[j%n]-'0')!=(j%2)) flip1++;
+            if((s[j%n]-'0')!=(!(j%2))) flip2++;
             if(j-i+1>n){
-                if(s[i%n]!=s1[i]) flip1--;
-                if(s[i%n]!=s2[i]) flip2--;
+                if((s[i%n]-'0')!=(i%2)) flip1--;
+                if((s[i%n]-'0')!=(!(i%2))) flip2--;
                 i++;
             }
             if(j-i+1==n){
