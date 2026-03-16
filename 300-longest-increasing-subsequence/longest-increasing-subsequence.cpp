@@ -1,0 +1,32 @@
+class Solution {
+    // int f(int idx,int preIdx,vector<int>&nums){
+    //     if(idx>=nums.size())    return 0;
+    //     int ans=0;
+    //     // not take
+    //     ans=max(ans,0+f(idx+1,preIdx,nums));
+    //     // take
+    //     if(preIdx==-1 || nums[idx]>nums[preIdx])    ans=max(ans,1+f(idx+1,idx,nums));
+    //     return ans;
+    // }
+
+    int f(int idx,int preIdx,vector<int>&nums,vector<vector<int>>&dp){
+        if(idx>=nums.size())    return 0;
+        if(dp[idx][preIdx+1]!=-1)   return dp[idx][preIdx+1];
+        int ans=0;
+        // not take
+        ans=max(ans,0+f(idx+1,preIdx,nums,dp));
+        // take
+        if(preIdx==-1 || nums[idx]>nums[preIdx])    ans=max(ans,1+f(idx+1,idx,nums,dp));
+        return dp[idx][preIdx+1] = ans;
+    }
+
+    
+public:
+    int lengthOfLIS(vector<int>& nums) {
+        int n=nums.size();
+        // return f(0,-1,nums);
+        vector<vector<int>>dp(n,vector<int>(n+1,-1));
+        return f(0,-1,nums,dp);
+
+    }
+};
