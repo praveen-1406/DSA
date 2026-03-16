@@ -43,20 +43,30 @@ public:
         // }
         // return dp[0][0];
 
-        vector<int>next(n+1,0),cur(n+1,0);
+        // vector<int>next(n+1,0),cur(n+1,0);
         // for(int i=0;i<=n;i++)   dp[n][i]=0;
 
-        for(int idx=n-1;idx>=0;idx--){
-            for(int preIdx=n-1;preIdx>=-1;preIdx--){
-                int ans=0;
-                // not take
-                ans=max(ans,0+next[preIdx+1]);
-                // take
-                if(preIdx==-1 || nums[idx]>nums[preIdx])    ans=max(ans,1+next[idx+1]);
-                cur[preIdx+1] = ans;
+        // for(int idx=n-1;idx>=0;idx--){
+        //     for(int preIdx=n-1;preIdx>=-1;preIdx--){
+        //         int ans=0;
+        //         // not take
+        //         ans=max(ans,0+next[preIdx+1]);
+        //         // take
+        //         if(preIdx==-1 || nums[idx]>nums[preIdx])    ans=max(ans,1+next[idx+1]);
+        //         cur[preIdx+1] = ans;
+        //     }
+        //     next=cur;
+        // }
+        // return next[0];
+
+        vector<int>dp(n,1);
+        int ans=1;
+        for(int i=0;i<n;i++){
+            for(int pre=0;pre<i;pre++){
+                if(nums[pre]<nums[i])   dp[i]=max(dp[i],1+dp[pre]);
             }
-            next=cur;
+            ans=max(ans,dp[i]);
         }
-        return next[0];
+        return ans;
     }
 };
