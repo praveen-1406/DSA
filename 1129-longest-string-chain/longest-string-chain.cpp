@@ -4,16 +4,15 @@ class Solution {
         int n=w1.size(),m=w2.size();
         if(n+1!=m)  return false;
         int i=0,j=0,cnt=0;
-        while(i<n && j<m){
-            if(w1[i]!=w2[j]){
-                cnt++;
-                i--;
+        while(j<m){
+            if(w1[i]==w2[j]){
+                j++;
+                i++;
             }
-            if(cnt>1)   return false;
-            i++;
-            j++;
+            else    j++;
         }
-        return true;
+        if(j==m && i==n)    return true;
+        return false;
     }
 public:
     int longestStrChain(vector<string>& words) {
