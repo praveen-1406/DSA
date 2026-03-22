@@ -8,7 +8,6 @@ class Solution {
             int cost=cuts[j+1]-cuts[i-1]+f(i,ind-1,cuts,dp)+f(ind+1,j,cuts,dp);
             mini=min(mini,cost);
         }
-        // if(mini==INT_MAX)   return 0;
         return dp[i][j]=mini;
     }
 public:
@@ -18,8 +17,22 @@ public:
         cuts.insert(cuts.begin(),0);
         sort(cuts.begin(),cuts.end());
 
-        vector<vector<int>>dp(c+1,vector<int>(c+1,-1));
-        return f(1,c,cuts,dp);
+        // vector<vector<int>>dp(c+1,vector<int>(c+1,-1));
+        // return f(1,c,cuts,dp);
+
+        vector<vector<int>>dp(c+2,vector<int>(c+1,0));
+        for(int i=c;i>=1;i--){
+            for(int j=1;j<=c;j++){
+                if(i>j)     continue;
+                int mini=INT_MAX;
+                for(int ind=i;ind<=j;ind++){
+                    int cost=cuts[j+1]-cuts[i-1]+dp[i][ind-1] +dp[ind+1][j];
+                    mini=min(mini,cost);
+                }
+                dp[i][j]=mini;
+            }
+        }
+        return dp[1][c];
 
     }
 };
