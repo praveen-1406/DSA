@@ -1,41 +1,47 @@
 class Solution {
-public:
-    int areaLargestRectHist(vector<int>&heights){
-        int n=heights.size();
+    int lrectArea(vector<int>&histo){
         stack<int>st;
-        int maxArea=0;
-        for(int i=0;i<n;i++){
-            while(!st.empty() && heights[st.top()]>=heights[i]){
-                int el=st.top();
+        int maxA=0;
+        int n=histo.size();
+        for(int i=0;i<=n;i++){
+            while(!st.empty() && (i==n || histo[st.top()]>histo[i])){   //nse & pse
+                int height=histo[st.top()];
                 st.pop();
-                int nse=i,pse=(st.empty())?-1:st.top();
-                maxArea=max(maxArea,(nse-pse-1)*heights[el]);
+                int width;
+                if(st.empty()){
+                    width=i;
+                }else{
+                    width=i-st.top()-1;
+                }
+                maxA=max(maxA,width*height); 
             }
             st.push(i);
         }
-        while(!st.empty()){
-            int el=st.top();
-            st.pop();
-            int nse=n,pse=(st.empty())?-1:st.top();
-            maxArea=max(maxArea,(nse-pse-1)*heights[el]);
-        }
-        return maxArea;
+        return maxA;
     }
+public:
     int maximalRectangle(vector<vector<char>>& matrix) {
-        int n=matrix.size(),m=matrix[0].size();
-        vector<vector<int>>pSum(n,vector<int >(m,0));
-        for(int j=0;j<m;j++){
-            int sum=0;
-            for(int i=0;i<n;i++){
-                sum+=(matrix[i][j]-'0');
-                if(matrix[i][j]=='0') sum=0;
-                pSum[i][j]=sum;
-            }
-        }
         int maxArea=0;
+        int n=matrix.size(),m=matrix[0].size();
+        vector<int>height(m,0);
         for(int i=0;i<n;i++){
-            maxArea=max(maxArea,areaLargestRectHist(pSum[i]));
+            for(int j=0;j<m;j++){
+                if(matrix[i][j]=='1')     height[j]++;
+                else    height[j]=0;
+            }
+            int area=lrectArea(height);
+            maxArea=max(maxArea,area);
         }
         return maxArea;
     }
 };
+
+
+
+
+
+
+
+
+
+
