@@ -37,7 +37,7 @@ public:
         long curSum=0;
         for(int r=0;r<n;r++){
             int target=nums[r];
-            long windowSum=1LL*(r-l+1)*target;
+            long windowSum=1L*(r-l+1)*target;
             curSum+=nums[r];
             long ops=windowSum-curSum;
             if(ops>k){
