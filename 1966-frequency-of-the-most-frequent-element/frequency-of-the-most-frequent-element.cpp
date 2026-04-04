@@ -40,7 +40,7 @@ public:
             long windowSum=1LL*(r-l+1)*target;
             curSum+=nums[r];
             long ops=windowSum-curSum;
-            while(ops>k){
+            if(ops>k){
                 curSum-=nums[l];
                 l++;
                 ops=1L*(r-l+1)*target-curSum;
