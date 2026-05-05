@@ -10,49 +10,25 @@
  */
 class Solution {
 public:
-    ListNode* findNthNode(ListNode* temp,int k){
-        int cnt=1;
+    ListNode* rotateRight(ListNode* head, int k) {
+        int n=0;
+        ListNode*temp=head,*pre=nullptr;
         while(temp){
-            if(cnt==k)  return temp;
-            cnt++;
+            n++;
+            pre=temp;
             temp=temp->next;
         }
-        return temp;
-    }
+        if(n==0)    return head;
+        temp=head;
 
-    ListNode* rotateRight(ListNode* head, int k) {
-        if(!head || !head->next || k==0)    return head;
-        ListNode*tail=head;
-        // int n=0;
-        // while(tail){
-        //     n++;
-        //     tail=tail->next;
-        // } 
-        // k=k%n;
-        // if(k==0)    return head;
-        // ListNode*slow=head,*fast=head;
-        // while(k--){
-        //     fast=fast->next;
-        // }
-        // while(fast->next){
-        //     slow=slow->next;
-        //     fast=fast->next;
-        // }
-        // head=slow->next;
-        // slow->next=nullptr;
-        // fast->next=head;
-        // return head;
-        int len=1;
-        while(tail->next){
-            len++;
-            tail=tail->next;
+        k=k%n;
+        int moves=n-k-1;
+        while(moves--){
+            temp=temp->next;
         }
-        k=k%len;
-        if(k==0)    return head;
-        tail->next=head;
-        ListNode*newLastNode=findNthNode(head,len-k);
-        head=newLastNode->next;
-        newLastNode->next=nullptr;
+        pre->next=head;
+        head=temp->next;
+        temp->next=nullptr;
         return head;
     }
 };
