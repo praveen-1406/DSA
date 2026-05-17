@@ -10,36 +10,37 @@
  * };
  */
 class Solution {
-public:
-    TreeNode* rightElem(TreeNode* node){
-        while(node->right)  node=node->right;
-        return node;
+    TreeNode* findRightMost(TreeNode*node){
+        if(node->right==nullptr)    return node;
+        return findRightMost(node->right);
     }
-    TreeNode* helper(TreeNode* node){
-        if(node->left==nullptr)   return node->right;
+    TreeNode*helper(TreeNode*node){
+        if(node==nullptr)   return nullptr;
+        if(node->left==nullptr)     return node->right;
         if(node->right==nullptr)    return node->left;
-        TreeNode* lastRight=rightElem(node->left);
-        lastRight->right=node->right;
-        TreeNode*leftChild=node->left;
+        TreeNode*rightMost=findRightMost(node->left);
+        rightMost->right=node->right;
+        TreeNode* newRoot=node->left;
         delete node;
-        return leftChild;
+        return newRoot;
     }
+public:
     TreeNode* deleteNode(TreeNode* root, int key) {
-        if(!root)   return root;
-        if(root->val==key)  return helper(root);
-        TreeNode* node=root;
-        while(node){
-            if(node->val > key){
-                if(node->left && node->left->val==key){
-                    node->left=helper(node->left);
-                    break;    
-                }else   node=node->left;
-            }else{
-                if(node->right && node->right->val==key){
-                    node->right=helper(node->right);
-                    break;
-                }else   node=node->right;
+        if(root==nullptr)   return nullptr;
+        if(root->val==key){
+            return helper(root);
+        }
+        TreeNode*cur=root;
+        while(cur){
+            if(cur->left && cur->left->val==key){
+                cur->left=helper(cur->left);
+                return root;
+            }else if(cur->right && cur->right->val==key){
+                cur->right=helper(cur->right);
+                return root;
             }
+            if(cur->val > key)      cur=cur->left;
+            else    cur=cur->right;
         }
         return root;
     }
