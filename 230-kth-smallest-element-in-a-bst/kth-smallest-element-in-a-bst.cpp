@@ -10,24 +10,31 @@
  * };
  */
 class Solution {
-    int helper(TreeNode*root,int k,vector<int>&sorted){
-        if(root==nullptr)   return -1;
-        int ans=-1;
-        if(root->left)  ans=helper(root->left,k,sorted);
-        if(ans!=-1)     return ans;
-
-        sorted.push_back(root->val);
-
-        if(root->right) ans=helper(root->right,k,sorted);
-        if(ans!=-1)     return ans;
-
-        if(sorted.size()>=k)    return sorted[k-1];
-
-        return -1;
-    }
+    
 public:
     int kthSmallest(TreeNode* root, int k) {
-        vector<int>sorted;
-        return helper(root,k,sorted);
+        TreeNode* cur=root;
+        int cnt=0,result=-1;
+        while(cur){
+            if(cur->left==nullptr){
+                cnt++;
+                if(cnt==k)  result= cur->val;
+                cur=cur->right;
+            }else{
+                TreeNode*rightMost=cur->left;
+                while(rightMost->right!=nullptr && rightMost->right!=cur)    rightMost=rightMost->right;
+                if(rightMost->right==cur){
+                    cnt++;
+                    if(cnt==k)  result= cur->val;
+                    rightMost->right=nullptr;
+                    cur=cur->right;
+                }
+                else{
+                    rightMost->right=cur;
+                    cur=cur->left;
+                }
+            }
+        }
+            return result;
     }
 };
