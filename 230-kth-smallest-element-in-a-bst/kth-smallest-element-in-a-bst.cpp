@@ -10,45 +10,24 @@
  * };
  */
 class Solution {
+    int helper(TreeNode*root,int k,vector<int>&sorted){
+        if(root==nullptr)   return -1;
+        int ans=-1;
+        if(root->left)  ans=helper(root->left,k,sorted);
+        if(ans!=-1)     return ans;
+
+        sorted.push_back(root->val);
+
+        if(root->right) ans=helper(root->right,k,sorted);
+        if(ans!=-1)     return ans;
+
+        if(sorted.size()>=k)    return sorted[k-1];
+
+        return -1;
+    }
 public:
-    // void preorder(TreeNode*root,set<int>&st){
-    //     if(root==nullptr)   return;
-    //     st.insert(root->val);
-    //     preorder(root->left,st);
-    //     preorder(root->right,st);
-    // }
     int kthSmallest(TreeNode* root, int k) {
-        // set<int>st;
-        // preorder(root,st);
-
-        // for(auto it:st){
-        //     if(k==1)    return it;
-        //     k--;
-        // }
-        // return -1;
-
-        //Morris inorder traversal.
-        TreeNode*node=root;
-        int cnt=0,result=-1;
-        while(node){
-            if(node->left==nullptr){
-                cnt++;
-                if(cnt==k)  result= node->val;
-                node=node->right;
-            }else{
-                TreeNode*rightMost=node->left;
-                while(rightMost->right && rightMost->right!=node)  rightMost=rightMost->right;
-                if(rightMost->right==node){
-                    cnt++;
-                    if(cnt==k)  result= node->val;
-                    rightMost->right=nullptr;
-                    node=node->right;
-                }else{
-                    rightMost->right=node;
-                    node=node->left;
-                }
-            }
-        }
-        return result;
+        vector<int>sorted;
+        return helper(root,k,sorted);
     }
 };
