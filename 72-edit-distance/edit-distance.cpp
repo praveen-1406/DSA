@@ -9,8 +9,8 @@ public:
             pre[i]=i;
         }
         for(int i=1;i<=n;i++){
+            cur[0]=i;
             for(int j=1;j<=m;j++){
-                cur[0]=i;
                 if(word1[i-1]==word2[j-1]){
                     cur[j]=pre[j-1];
                 }
