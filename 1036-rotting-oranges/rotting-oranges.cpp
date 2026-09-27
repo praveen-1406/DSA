@@ -1,71 +1,55 @@
 class Solution {
 public:
     int orangesRotting(vector<vector<int>>& grid) {
-        int n=grid.size();
-        int m=grid[0].size();
-
-        int maxtime=0;
-        queue<pair<pair<int,int>,int>>q;
-        vector<vector<int>>vis(n,vector<int>(m,0));
-        int fresh=0;
-        for(int i=0;i<n;i++){
-            for(int j=0;j<m;j++){
-                if(grid[i][j]==2){
-                    q.push({{i,j},0});
-                    vis[i][j]=2;
+        int m=grid.size(), n=grid[0].size();
+        vector<vector<int>>vis(m,vector<int>(n,0));
+        queue<pair<int,int>>q;
+        for(int row=0;row<m;row++){
+            for(int col=0;col<n;col++){
+                if(grid[row][col]==2){
+                    vis[row][col]=1;
+                    q.push({row,col});
                 }
-                if(grid[i][j]==1){
-                    fresh++;
-                }
-                
             }
         }
-        
-        int drow[] ={-1,0,+1,0};
-        int dcol[] ={0,-1,0,+1};
+        if(q.empty()){
+            for(int row=0;row<m;row++){
+                for(int col=0;col<n;col++){
+                    if(grid[row][col]==1){
+                        return -1;
+                    }
+                }
+            }
+            return 0;
+        }
 
+        int time=0;
         while(!q.empty()){
-            int row=q.front().first.first;
-            int col=q.front().first.second;
-            int time=q.front().second;
-            q.pop();
-            maxtime=max(maxtime,time);
-            // if(row>0 && !vis[row-1][col] && grid[row-1][col]==1){
-            //     q.push({{row-1,col},time+1});
-            //     vis[row-1][col]=2;
-            // }
-            // if(row<n-1 && !vis[row+1][col] && grid[row+1][col]==1){
-            //     q.push({{row+1,col},time+1});
-            //     vis[row+1][col]=2;
-            // }
-            // if(col>0 && !vis[row][col-1] && grid[row][col-1]==1){
-            //     q.push({{row,col-1},time+1});
-            //     vis[row][col-1]=2;
-            // }
-            // if(col<m-1 && !vis[row][col+1] && grid[row][col+1]==1){
-            //     q.push({{row,col+1},time+1});
-            //     vis[row][col+1]=2;
-            // }
-            for(int i=0;i<4;i++){
-                int nrow=row+drow[i];
-                int ncol=col+dcol[i];
-                if(nrow>=0 && nrow<n && ncol>=0 && ncol<m && !vis[nrow][ncol] && grid[nrow][ncol]==1){
-                    vis[nrow][ncol]=1;
-                    q.push({{nrow,ncol},time+1});
-                    fresh--;
+            time++;
+            int s=q.size();
+            int dx[]={-1,0,+1,0};
+            int dy[]={0,+1,0,-1};
+            for(int z=1;z<=s;z++){
+                int row=q.front().first;
+                int col=q.front().second;
+                q.pop();
+                for(int k=0;k<4;k++){
+                    int x=row+dx[k];
+                    int y=col+dy[k];
+                    if(x>=0 && y>=0 && x<m && y<n && grid[x][y]==1 && vis[x][y]==0){
+                        vis[x][y]=1;
+                        q.push({x,y});
+                    }
                 }
             }
         }
-
-        // for(int i = 0; i < n; i++){
-        //     for(int j = 0; j < m; j++){
-        //         if(grid[i][j] == 1) {
-        //             if(vis[i][j]==0)    return -1;
-        //         }
-        //     }
-        // }
-        if(fresh!=0)    return -1;
-        
-        return maxtime;
+        for(int row=0;row<m;row++){
+            for(int col=0;col<n;col++){
+                if(grid[row][col]==1 && vis[row][col]==0){
+                    return -1;
+                }
+            }
+        }
+        return time-1;
     }
 };
